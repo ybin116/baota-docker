@@ -2,19 +2,17 @@ FROM centos:latest
 MAINTAINER yarmy bin@mlia.cn
 
 COPY entrypoint.sh /home/entrypoint.sh
+COPY install_6.0.sh /home/install_6.0.sh
 
 RUN cd /home \
-    && curl -o install.sh http://download.bt.cn/install/install_6.0.sh \
     && mkdir /etc/backup/ \
-    && mv /etc/yum.repos.d/* /etc/backup/ \
-    && curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo \
     && yum install -y wget \
     && mkdir -p /www/letsencrypt \
     && ln -s /www/letsencrypt /etc/letsencrypt \
     && mkdir /www/init.d \
     && rm -f /etc/init.d  \
     && ln -s /www/init.d /etc/init.d \
-    && echo y | bash install.sh \
+    && echo y | bash install_6.0.sh \
     && bash /www/server/panel/install/install_soft.sh 1 install php 5.6 \
     && bash /www/server/panel/install/install_soft.sh 1 install php 7.3 \
     && bash /www/server/panel/install/install_soft.sh 1 install nginx 1.16 \
